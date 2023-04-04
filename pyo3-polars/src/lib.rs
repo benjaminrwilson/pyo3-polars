@@ -44,6 +44,8 @@ use crate::error::PyPolarsErr;
 use crate::ffi::to_py::to_py_array;
 use polars::prelude::*;
 use pyo3::{FromPyObject, IntoPy, PyAny, PyObject, PyResult, Python, ToPyObject};
+#[cfg(feature = "serde")]
+use serde::{Deserialize, Serialize};
 
 #[repr(transparent)]
 #[derive(Debug, Clone)]
@@ -52,6 +54,7 @@ pub struct PySeries(pub Series);
 
 #[repr(transparent)]
 #[derive(Debug, Clone)]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 /// A wrapper around a [`DataFrame`] that can be converted to and from python with `pyo3`.
 pub struct PyDataFrame(pub DataFrame);
 
